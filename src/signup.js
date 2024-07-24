@@ -46,7 +46,7 @@ const Signup = (props) => {
 
   return (
     <Background>
-      <View style={{ alignItems: 'center', width: '100%', paddingHorizontal: 20 }}>
+      <View style={{ alignItems: 'center', width: '80%', paddingHorizontal: 20 }}>
         <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold', marginTop: 20 }}>
           Register
         </Text>
@@ -54,12 +54,14 @@ const Signup = (props) => {
           Create a new account
         </Text>
         <View style={{ backgroundColor: 'white', borderRadius: 20, padding: 20, width: '100%', maxWidth: 400 }}>
-          <Field placeholder="Farmer ID" value={farmerId} onChangeText={setFarmerId} />
-          <Field placeholder="Full Name" value={fullName} onChangeText={setFullName} />
-          <Field placeholder="Email" keyboardType={'email-address'} value={email} onChangeText={setEmail} />
-          <Field placeholder="Mobile Number" keyboardType={'number-pad'} value={mobileNumber} onChangeText={setMobileNumber} />
-          <Field placeholder="Password" secureTextEntry={true} value={password} onChangeText={setPassword} />
-          <Field placeholder="Confirm Password" secureTextEntry={true} value={confirmPassword} onChangeText={setConfirmPassword} />
+          <View style={{ width:330, flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
+            <Field style={{width:100}} placeholder="Farmer ID" value={farmerId} onChangeText={setFarmerId} />
+            <Field placeholder="Full Name" value={fullName} onChangeText={setFullName} />
+            <Field placeholder="Email" keyboardType={'email-address'} value={email} onChangeText={setEmail} />
+            <Field placeholder="Mobile Number" keyboardType={'number-pad'} value={mobileNumber} onChangeText={setMobileNumber} />
+            <Field placeholder="Password" secureTextEntry={true} value={password} onChangeText={setPassword} />
+            <Field placeholder="Confirm Password" secureTextEntry={true} value={confirmPassword} onChangeText={setConfirmPassword} />
+          </View>
 
           <View style={{ flexDirection: 'column', width: '100%', paddingRight: 16, marginTop: 10, alignItems: 'center' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
@@ -80,6 +82,7 @@ const Signup = (props) => {
               bgColor={darkGreen}
               btnLabel="Signup"
               Press={handleSignup}
+              style={{ width: 100 }}
             />
           </View>
 
@@ -94,5 +97,8 @@ const Signup = (props) => {
     </Background>
   );
 };
+
+
+
 
 export default Signup;

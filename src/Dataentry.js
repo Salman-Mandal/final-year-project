@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, TextInput, ScrollView } from 'react-native';
 import Btn from './Btn';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -12,6 +12,9 @@ const Dataentry = () => {
     const [earningsCategory, setEarningsCategory] = useState('');
     const [earningsName, setEarningsName] = useState('');
     const [earningsPrice, setEarningsPrice] = useState('');
+
+    const [medicineName, setMedicineName] = useState('');
+    const [medicineAmount, setMedicineAmount] = useState('');
 
     const expenseCategories = [
         'Labor Costs',
@@ -45,122 +48,171 @@ const Dataentry = () => {
         // Add your save logic here
     };
 
+    const handleSaveMedicine = () => {
+        console.log('Medicine entry success:', { name: medicineName, amount: medicineAmount });
+        // Add your save logic here
+    };
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View>
-                <View>
-                    <Text>Expenses</Text>
-                    <SafeAreaView>
-                        <Dropdown
-                            style={styles.dropdown}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={expenseCategories.map((cat, index) => ({ label: cat, value: cat }))}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Select a category"
-                            searchPlaceholder="Search..."
-                            value={expenseCategory}
-                            onChange={(item) => setExpenseCategory(item.value)}
-                            renderLeftIcon={() => (
-                                <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                            )}
-                        />
-
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setExpenseName}
-                            value={expenseName}
-                            placeholder="Name"
-                        />
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setExpensePrice}
-                            value={expensePrice}
-                            placeholder="Price"
-                            keyboardType="numeric"
-                        />
-
-                        <View>
-                            <Btn textColor="white" bgColor="blue" btnLabel="Save" Press={handleSaveExpense} />
-                        </View>
-                    </SafeAreaView>
-                </View>
-                <View>
-                    <Text>Earnings</Text>
-                    <SafeAreaView>
-                        <Dropdown
-                            style={styles.dropdown}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={earningsCategories.map((cat, index) => ({ label: cat, value: cat }))}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Select a category"
-                            searchPlaceholder="Search..."
-                            value={earningsCategory}
-                            onChange={(item) => setEarningsCategory(item.value)}
-                            renderLeftIcon={() => (
-                                <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-                            )}
-                        />
-
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setEarningsName}
-                            value={earningsName}
-                            placeholder="Name"
-                        />
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setEarningsPrice}
-                            value={earningsPrice}
-                            placeholder="Price"
-                            keyboardType="numeric"
-                        />
-
-                        <View>
-                            <Btn textColor="white" bgColor="blue" btnLabel="Save" Press={handleSaveExpense} />
-                        </View>
-                    </SafeAreaView>
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Expenses</Text>
+                    <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={expenseCategories.map((cat, index) => ({ label: cat, value: cat }))}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder="Select a category"
+                        searchPlaceholder="Search..."
+                        value={expenseCategory}
+                        onChange={(item) => setExpenseCategory(item.value)}
+                        renderLeftIcon={() => (
+                            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                        )}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setExpenseName}
+                        value={expenseName}
+                        placeholder="Name"
+                        placeholderTextColor="#aaa"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setExpensePrice}
+                        value={expensePrice}
+                        placeholder="Price"
+                        placeholderTextColor="#aaa"
+                        keyboardType="numeric"
+                    />
+                    <Btn textColor="white" bgColor="blue" btnLabel="Save Expense" Press={handleSaveExpense} />
                 </View>
 
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Earnings</Text>
+                    <Dropdown
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={earningsCategories.map((cat, index) => ({ label: cat, value: cat }))}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder="Select a category"
+                        searchPlaceholder="Search..."
+                        value={earningsCategory}
+                        onChange={(item) => setEarningsCategory(item.value)}
+                        renderLeftIcon={() => (
+                            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+                        )}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setEarningsName}
+                        value={earningsName}
+                        placeholder="Name"
+                        placeholderTextColor="#aaa"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setEarningsPrice}
+                        value={earningsPrice}
+                        placeholder="Price"
+                        placeholderTextColor="#aaa"
+                        keyboardType="numeric"
+                    />
+                    <Btn textColor="white" bgColor="green" btnLabel="Save Earnings" Press={handleSaveEarnings} />
+                </View>
 
-
-            </View>
-        </View>
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Medicine Usage</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setMedicineName}
+                        value={medicineName}
+                        placeholder="Medicine Name"
+                        placeholderTextColor="#aaa"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={setMedicineAmount}
+                        value={medicineAmount}
+                        placeholder="Amount Used"
+                        placeholderTextColor="#aaa"
+                        keyboardType="numeric"
+                    />
+                    <Btn textColor="white" bgColor="purple" btnLabel="Save Medicine" Press={handleSaveMedicine} />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:  '#A5D8DD', // Light blue background color
+    },
+    scrollContainer: {
+        padding: 20,
+        alignItems: 'center',
+    },
+    section: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        marginVertical: 10,
+        width: '100%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 2,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: '#333',
+    },
     input: {
         height: 40,
-        margin: 12,
+        borderColor: '#ddd',
         borderWidth: 1,
-        padding: 10,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginVertical: 10,
+        color: '#333',
     },
     dropdown: {
-        margin: 16,
+        marginVertical: 10,
         height: 50,
-        borderBottomColor: 'gray',
-        borderBottomWidth: 0.5,
+        borderColor: '#ddd',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        color: '#333',
     },
     icon: {
         marginRight: 5,
     },
     placeholderStyle: {
         fontSize: 16,
+        color: '#aaa',
     },
     selectedTextStyle: {
         fontSize: 16,
+        color: '#333',
     },
     iconStyle: {
         width: 20,

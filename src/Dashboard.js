@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const Dashboard = ({ navigation }) => {
-  // Dummy data
   const expenseData = [
-    { category: 'Seeds', name: 'Seed Purchase', price: 500 },
-    { category: 'Fertilizer', name: 'Fertilizer Purchase', price: 300 },
-    // Add more expense items as needed
+    { category: 'Seeds', name: 'Seed Purchase', price: 500, date: '2024-06-01' },
+    { category: 'Fertilizer', name: 'Fertilizer Purchase', price: 300, date: '2024-06-02' },
   ];
 
   const earningsData = [
-    { category: 'Tea Sales', name: 'Tea Product Sales', price: 1200 },
-    { category: 'Harvesting', name: 'Harvesting Income', price: 800 },
-    // Add more earnings items as needed
+    { category: 'Tea Sales', name: 'Tea Product Sales', price: 1200, date: '2024-06-03' },
+    { category: 'Harvesting', name: 'Harvesting Income', price: 800, date: '2024-06-04' },
   ];
 
-  // Calculate total for expenses and earnings
+  const medicineData = [
+    { name: 'Pesticide', amount: 100, date: '2024-06-05' },
+    { name: 'Fungicide', amount: 200, date: '2024-06-06' },
+  ];
+
   const totalExpense = expenseData.reduce((sum, item) => sum + item.price, 0);
   const totalEarnings = earningsData.reduce((sum, item) => sum + item.price, 0);
   const netTotal = totalEarnings - totalExpense;
@@ -26,32 +28,73 @@ const Dashboard = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Dashboard Screen</Text>
 
-      <TouchableOpacity style={styles.section} onPress={() => navigateToDataEntry('expense')}>
-        <Text style={styles.sectionHeading}>Expense Entry</Text>
-        {expenseData.map((item, index) => (
-          <Text key={index} style={styles.item}>
-            {`${item.name}: ₹${item.price}`}
-          </Text>
-        ))}
-        <Text style={styles.total}>Total Expense: ₹{totalExpense}</Text>
-      </TouchableOpacity>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Ionicons name="wallet-outline" size={24} color="green" style={styles.icon} />
+            <Text style={styles.tableHeaderText}>Expense Entry</Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableHeaderCell}>Name</Text>
+            <Text style={styles.tableHeaderCell}>Category</Text>
+            <Text style={styles.tableHeaderCell}>Price</Text>
+            <Text style={styles.tableHeaderCell}>Date</Text>
+          </View>
+          {expenseData.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.name}</Text>
+              <Text style={styles.tableCell}>{item.category}</Text>
+              <Text style={styles.tableCell}>{item.price}</Text>
+              <Text style={styles.tableCell}>{item.date}</Text>
+            </View>
+          ))}
+          <Text style={styles.total}>Total Expense: ₹{totalExpense}</Text>
+        </View>
 
-      <TouchableOpacity style={styles.section} onPress={() => navigateToDataEntry('earnings')}>
-        <Text style={styles.sectionHeading}>Earnings Entry</Text>
-        {earningsData.map((item, index) => (
-          <Text key={index} style={styles.item}>
-            {`${item.name}: ₹${item.price}`}
-          </Text>
-        ))}
-        <Text style={styles.total}>Total Earnings: ₹{totalEarnings}</Text>
-      </TouchableOpacity>
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Ionicons name="cash-outline" size={24} color="green" style={styles.icon} />
+            <Text style={styles.tableHeaderText}>Earnings Entry</Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableHeaderCell}>Name</Text>
+            <Text style={styles.tableHeaderCell}>Category</Text>
+            <Text style={styles.tableHeaderCell}>Price</Text>
+            <Text style={styles.tableHeaderCell}>Date</Text>
+          </View>
+          {earningsData.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.name}</Text>
+              <Text style={styles.tableCell}>{item.category}</Text>
+              <Text style={styles.tableCell}>{item.price}</Text>
+              <Text style={styles.tableCell}>{item.date}</Text>
+            </View>
+          ))}
+          <Text style={styles.total}>Total Earnings: ₹{totalEarnings}</Text>
+        </View>
 
-      <View style={styles.netTotalContainer}>
-        <Text style={styles.netTotalHeading}>Net Total:</Text>
-        <Text style={styles.netTotalValue}>₹{netTotal}</Text>
-      </View>
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <Ionicons name="medkit-outline" size={24} color="green" style={styles.icon} />
+            <Text style={styles.tableHeaderText}>Medicine Usage</Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableHeaderCell}>Name</Text>
+            <Text style={styles.tableHeaderCell}>Amount</Text>
+            <Text style={styles.tableHeaderCell}>Date</Text>
+          </View>
+          {medicineData.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.name}</Text>
+              <Text style={styles.tableCell}>{item.amount}</Text>
+              <Text style={styles.tableCell}>{item.date}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+
+      
 
       <TouchableOpacity style={styles.dataEntryButton} onPress={navigateToDataEntry}>
         <Text style={styles.buttonText}>Go to Data Entry</Text>
@@ -63,48 +106,79 @@ const Dashboard = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#A5D8DD',
+    padding: 20,
   },
   heading: {
-    fontSize: 40,
+    fontSize: 36,
     color: 'green',
     marginBottom: 20,
+    textAlign: 'center',
   },
-  section: {
-    marginBottom: 30,
-    width: '80%',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: 'lightgray',
+  scrollContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  table: {
+    marginBottom: 20,
+    backgroundColor: 'white',
+    padding: 10,
     borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
-  sectionHeading: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  tableHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 10,
   },
-  item: {
+  icon: {
+    marginRight: 10,
+  },
+  tableHeaderText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  tableHeaderCell: {
     fontSize: 16,
-    marginBottom: 5,
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+  },
+  tableCell: {
+    fontSize: 16,
+    flex: 1,
+    textAlign: 'center',
   },
   total: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
+    textAlign: 'right',
   },
   netTotalContainer: {
     marginTop: 20,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   netTotalHeading: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginRight: 10,
   },
   netTotalValue: {
-    fontSize: 20,
+    fontSize: 24,
     color: 'blue',
   },
   dataEntryButton: {
@@ -112,6 +186,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'blue',
     borderRadius: 10,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',

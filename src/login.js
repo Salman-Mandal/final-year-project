@@ -103,7 +103,7 @@ const Login = (props) => {
 
         </View>
       </View>
-      <View style={{ position: "relative", flex: 1 }}>
+      <View style={{ position: "relative", flex: 1, marginLeft:50 }}>
         <Btn textColor='white' bgColor={darkGreen} btnLabel="Login" Press={handleLogin} />
       </View>
       <View style={{ marginLeft: 50, display: 'flex', flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
